@@ -1,0 +1,75 @@
+[project]
+authors     = [{name = "Artem Nizhyvenko", email = "artem_nizhyvenko@proton.me"}]
+description = "Homework dlt Advanced course"
+name        = "DLT_Advanced_Course"
+readme      = "README.md"
+version     = "0.1.0"
+
+dependencies = [
+  "dlt[cli,duckdb]>=1.14.1",
+]
+requires-python = ">=3.13"
+
+[project.optional-dependencies]
+dev = [
+  "ruff>=0.12.7",
+]
+
+[project.urls]
+repository = "https://github.com/bury7/DLT_Advanced_Course"
+
+[tool.ruff]
+exclude = [
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".github",
+  ".hg",
+  ".idea",
+  ".ipynb_checkpoints",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pyenv",
+  ".pytest_cache",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  ".vscode",
+  "__pycache__",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "env_files",
+  "node_modules",
+  "site-packages",
+  "tmp",
+  "venv",
+]
+
+indent-width = 4
+line-length  = 119
+
+target-version = "py313"
+
+[tool.ruff.lint]
+ignore = ["C901", "D", "DOC", "PLR0912", "PLR0915", "T201"]
+select = ["ALL"]
+
+fixable   = ["ALL"]
+unfixable = []
+
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+docstring-code-format     = false
+indent-style              = "space"
+line-ending               = "auto"
+quote-style               = "double"
+skip-magic-trailing-comma = false

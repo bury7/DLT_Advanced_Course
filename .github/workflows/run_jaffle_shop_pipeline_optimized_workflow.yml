@@ -1,0 +1,48 @@
+name: Run jaffle_shop_pipeline_optimized pipeline from homework.py
+
+on:
+  workflow_dispatch:
+
+env:
+  EXTRACT__WORKERS: "6"
+  DATA_WRITER__BUFFER_MAX_ITEMS: "10000"
+  NORMALIZE__WORKERS: "4"
+  LOAD__WORKERS: "4"
+
+jobs:
+  maybe_skip:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip: ${{ steps.skip_check.outputs.should_skip }}
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@v5
+        with:
+          concurrent_skipping: always
+          skip_after_successful_duplicate: "false"
+          do_not_skip: "[]"
+
+  run_pipeline:
+    needs: maybe_skip
+    if: needs.maybe_skip.outputs.should_skip != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
+          enable-cache: true
+
+      - name: Install dependencies with uv
+        run: uv sync
+
+      - name: Run pipeline script
+        run: uv run python homework.py
